@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Speech from 'speak-tts'
 
 const speech = new Speech()
@@ -23,17 +23,21 @@ function sayLetter(text) {
     speech.speak({ text });
 }
 
-function listening() {
-    const letter = getRandomLetter();
-
+function Listening() {
+    const [letter, setLetter] = useState(getRandomLetter());
 
     return (
         <div>
             <h1>Mi Componente</h1>
-            <button onClick={() => sayLetter(letter)}>Click me</button>
+            <button onClick={() => sayLetter(letter)}>Repetir</button>
+            <button onClick={() => {
+                const newLetter = getRandomLetter();
+                sayLetter(newLetter);
+                setLetter(newLetter);
+            }}>Cambiar</button>
 
         </div>
     );
 }
 
-export default listening;
+export default Listening;
