@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Speech from 'speak-tts'
 
 const speech = new Speech()
@@ -12,20 +12,32 @@ speech.init({
     'splitSentences': true
 })
 
-function  saludarAstrid() {
-    speech.speak({ text: 'Hola Astrid ?' });
+function getRandomLetter() {
+    let letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "CH"]
+    let position = Math.floor(letters.length * Math.random())
+
+    return letters[position]
 }
 
-function listening() {
+function sayLetter(text) {
+    speech.speak({ text });
+}
+
+function Listening() {
+    const [letter, setLetter] = useState(getRandomLetter());
 
     return (
         <div>
             <h1>Mi Componente</h1>
-            <button onClick={saludarAstrid}>Click me</button>
+            <button onClick={() => sayLetter(letter)}>Repetir</button>
+            <button onClick={() => {
+                const newLetter = getRandomLetter();
+                sayLetter(newLetter);
+                setLetter(newLetter);
+            }}>Cambiar</button>
+
         </div>
     );
 }
 
-export default listening;
-
-//speech.speak({ text: 'Hola Astrid ?' });
+export default Listening;
